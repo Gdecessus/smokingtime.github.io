@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smoke Break Countdown</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div id="prompt-box">
+      <p>Would you like to go for a smoke?</p>
+      <button id="yes-btn">Yes</button>
+      <button id="no-btn">No</button>
+    </div>
+
+    <div id="time-box" class="hidden">
+      <p>What time? (in minutes)</p>
+      <input type="number" id="time-input" min="1" placeholder="Enter time">
+      <button id="start-btn">Start Countdown</button>
+    </div>
+
+    <div id="countdown-box" class="hidden">
+      <p>Countdown:</p>
+      <h1 id="countdown">0</h1>
+    </div>
+  </div>
+
+  <script>
+    const promptBox = document.getElementById('prompt-box');
+    const timeBox = document.getElementById('time-box');
+    const countdownBox = document.getElementById('countdown-box');
+    const countdownDisplay = document.getElementById('countdown');
+    const yesBtn = document.getElementById('yes-btn');
+    const noBtn = document.getElementById('no-btn');
+    const startBtn = document.getElementById('start-btn');
+    const timeInput = document.getElementById('time-input');
+
+    let countdownInterval;
+
+    yesBtn.addEventListener('click', () => {
+      promptBox.classList.add('hidden');
+      timeBox.classList.remove('hidden');
+    });
+
+    noBtn.addEventListener('click', () => {
+      alert("Okay, maybe later!");
+    });
+
+    startBtn.addEventListener('click', () => {
+      const timeInMinutes = parseInt(timeInput.value);
+      if (isNaN(timeInMinutes) || timeInMinutes <= 0) {
+        alert("Please enter a valid time!");
+        return;
+      }
+
+      timeBox.classList.add('hidden');
+      countdownBox.classList.remove('hidden');
+
+      let timeLeft = timeInMinutes * 60; // Convert minutes to seconds
+      startCountdown(timeLeft);
+    });
+
+    function startCountdown(seconds) {
+      clearInterval(countdownInterval); // Clear any existing interval
+      countdownInterval = setInterval(() => {
+        if (seconds <= 0) {
+          clearInterval(countdownInterval);
+          countdownDisplay.textContent = "Time's up!";
+          return;
+        }
+
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        countdownDisplay.textContent = `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        seconds--;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
