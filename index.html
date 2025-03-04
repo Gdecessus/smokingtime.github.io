@@ -57,12 +57,12 @@
       timeBox.classList.add('hidden');
       countdownBox.classList.remove('hidden');
 
-      let timeLeft = timeInMinutes * 60; // Convert minutes to seconds
+      let timeLeft = timeInMinutes * 60;
       startCountdown(timeLeft);
     });
 
     function startCountdown(seconds) {
-      clearInterval(countdownInterval); // Clear any existing interval
+      clearInterval(countdownInterval); 
       countdownInterval = setInterval(() => {
         if (seconds <= 0) {
           clearInterval(countdownInterval);
